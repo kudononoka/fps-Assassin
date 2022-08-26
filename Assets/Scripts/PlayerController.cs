@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
             _cmSub.SetActive(true);
             _walkSpeed = 8;
             _rb.velocity = new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
-            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
+            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0,10,0);
             transform.rotation = _forward;
             //_subcamera.enabled = true;
             _target.enabled = true;
