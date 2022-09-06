@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5186918069265707293}
   - component: {fileID: 8408647119109403509}
   - component: {fileID: 8814147746554730595}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ballet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

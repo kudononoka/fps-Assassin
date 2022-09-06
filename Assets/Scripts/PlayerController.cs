@@ -4,21 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
-    //[SerializeField] GameObject _looktarget;
-    private Vector3 _look;
+    /// <summary>重力</summary>
     private Rigidbody _rb;
+    /// <summary>Playerのアニメーター</summary>
     private Animator _anim;
+    [Tooltip("カメラの向きを取得")]
     private Quaternion _forward;
-    private Vector3 _right;
+    [Tooltip("カメラの向きとプレイヤーの向きをそろえる")]
     private Quaternion _rotation;
-    private Vector3 _gun;
+  　/// <summary>MainCamera</summary>
     private GameObject _camera;
+　　/// <summary>VirtualCamera 三人称視点</summary>
+  　[Tooltip("移動などに使うカメラ")]
     private GameObject _cmSub;
-    private Transform _subcameraTra;
+    /// <summary> VirtualCamera 三人称視点　プレイヤー近くの背後の画面</summary>
+    [Tooltip("射撃時のカメラ")]
+    private GameObject _cmSubMain;
+    /// <summary>照準UI</summary>
     private Image _target;
+    private Image _normal;
 
+    private int hp;
+    private int maxHp = 100;
+    private int minHp = 0;
+
+    private float _moveSpeed = 5f;
     private float _walkSpeed = 5f;
-    private bool isSet = false;
+    private float _runSpeed = 10f;
+    private bool isSet = false; public bool IsSet { get { return isSet; } set { isSet = value; } }
+
+    
+
+    
+    
     
     
 
@@ -28,15 +46,14 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _camera = GameObject.Find("Main Camera");
-        
+        _cmSubMain = GameObject.Find("CM vcam1");
         _cmSub = GameObject.Find("CM vcam2");
         _cmSub.SetActive(false);
-        
-        //_gun = GameObject.Find("gunfrem").GetComponent<Transform>().localPosition;
-        //_subcameraTra = GameObject.Find("CM vcam2").GetComponent<Transform>();
         _target = GameObject.Find("target").GetComponent<Image>();
+        _normal = GameObject.Find("normal").GetComponent<Image>();
+        _normal.enabled = true;
         _target.enabled = false;
-        //_subcamera.enabled = false;
+        _moveSpeed = _walkSpeed;
     }
     private void Update()
     {
@@ -49,39 +66,52 @@ public class PlayerController : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
+       
+        _cmSub.transform.position = _cmSubMain.transform.position;
+        _cmSub.transform.rotation = _cmSubMain.transform.rotation;
+        
 
+        if (!isSet)
 
-
-        //_forward = Vector3.Scale( transform.TransformDirection(_camera.forward),new Vector3(0,0,1)).normalized;
-        //_right = Vector3.Scale( transform.TransformDirection(_camera.right),new Vector3(1,0,0)).normalized;
-
-        if (isSet == false)
         {
+
             _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
-
-            _rb.velocity = _forward * new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
+            _rb.velocity = _forward * new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
             float _rotateSpeed = 600 * Time.deltaTime;
+            Vector3 fow = _rb.velocity;
+
+            if (fow != Vector3.zero)
+            {
+
+                _rotation = Quaternion.LookRotation(fow, Vector3.up);
+                
+            }
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotation, _rotateSpeed);
 
 
-            _rotation = Quaternion.LookRotation(_rb.velocity, Vector3.up);
             _anim.SetFloat("walk", _rb.velocity.magnitude);
 
             if (_rb.velocity.magnitude > 0.1)
             {
+
                 if (Input.GetButton("Run"))
                 {
                     _anim.SetBool("run", true);
-                    _walkSpeed = 10f;
+                    _moveSpeed = _runSpeed;
                 }
+
                 else
                 {
                     _anim.SetBool("run", false);
-                    _walkSpeed = 5f;
+                    _moveSpeed = _walkSpeed;
                 }
+
             }
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotation, _rotateSpeed);
+
         }
+        
 
 
 
@@ -89,21 +119,23 @@ public class PlayerController : MonoBehaviour
         {
             isSet = true;
             _cmSub.SetActive(true);
-            _walkSpeed = 8;
-            _rb.velocity = new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
-            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0,10,0);
-            transform.rotation = _forward;
-            //_subcamera.enabled = true;
-            _target.enabled = true;
-            _anim.SetBool("set",true);
             
+            //_cmSub.transform.position = _cmSubMain.transform.position;
+            //_cmSub.transform.rotation = _cmSubMain.transform.rotation;
+            _rb.velocity = new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
+            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0, 10, 0);
+            transform.rotation = _forward * Quaternion.AngleAxis(_camera.transform.eulerAngles.x, Vector3.right);
+            _normal.enabled = false;
+            _target.enabled = true;
+            _anim.SetBool("set", true);
         }
         else
         {
-            _walkSpeed = 5;
+            
             _cmSub.SetActive(false);
             _anim.SetBool("set", false);
             _target.enabled = false;
+            _normal.enabled = true;
             isSet = false;
             //_subcamera.enabled = false;
         }
