@@ -5,13 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-
+   
     private int _score = 0;
 　　private float Time = 0;
     
 
 
     public static GameManager Instance　=> instance;
+
+    
     // Start is called before the first frame update
     private void Awake()
     {

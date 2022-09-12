@@ -120,8 +120,8 @@ public class PlayerController : MonoBehaviour
             isSet = true;
             _cmSub.SetActive(true);
             
-            //_cmSub.transform.position = _cmSubMain.transform.position;
-            //_cmSub.transform.rotation = _cmSubMain.transform.rotation;
+            _cmSub.transform.position = _cmSubMain.transform.position;
+            _cmSub.transform.rotation = _cmSubMain.transform.rotation;
             _rb.velocity = new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
             _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0, 10, 0);
             transform.rotation = _forward * Quaternion.AngleAxis(_camera.transform.eulerAngles.x, Vector3.right);
