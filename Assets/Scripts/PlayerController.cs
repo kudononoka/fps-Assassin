@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion _rotation;
   　/// <summary>MainCamera</summary>
     private GameObject _camera;
+    private Camera _cam;
 　　/// <summary>VirtualCamera 三人称視点</summary>
   　[Tooltip("移動などに使うカメラ")]
     private GameObject _cmSub;
@@ -28,9 +29,9 @@ public class PlayerController : MonoBehaviour
     private int maxHp = 100;
     private int minHp = 0;
 
-    private float _moveSpeed = 5f;
-    private float _walkSpeed = 5f;
-    private float _runSpeed = 10f;
+    private float _moveSpeed = 3f;
+    private float _walkSpeed = 3f;
+    private float _runSpeed = 7f;
     private bool isSet = false; public bool IsSet { get { return isSet; } set { isSet = value; } }
 
     
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _camera = GameObject.Find("Main Camera");
+        _cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         _cmSubMain = GameObject.Find("CM vcam1");
         _cmSub = GameObject.Find("CM vcam2");
         _cmSub.SetActive(false);
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour
         {
             isSet = true;
             _cmSub.SetActive(true);
-            
+            _cam.fieldOfView = 5;
             _cmSub.transform.position = _cmSubMain.transform.position;
             _cmSub.transform.rotation = _cmSubMain.transform.rotation;
             _rb.velocity = new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            
+            //_cam.fieldOfView = 16;
             _cmSub.SetActive(false);
             _anim.SetBool("set", false);
             _target.enabled = false;
