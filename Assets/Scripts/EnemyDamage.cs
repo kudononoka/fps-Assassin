@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDamage : MonoBehaviour
+public abstract class EnemyDamage : MonoBehaviour
 {
-    private int damage = 10;
+    private int damage = 1; public int enemyDamage { get { return damage; } set { damage = value; } }
+    public abstract void Point();
+    public abstract void Score();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,15 +20,22 @@ public class EnemyDamage : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other)
+    
+    protected int Damage(int hp)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        Debug.Log("ダメージ");
+        Score();
+        hp -= damage;
+        if (hp <= 0)
         {
-            //Damage(damage);
+            Point();
+            Destroy(gameObject);
+           
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
         
+        return hp;
     }
+
+
+   
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PunchRobo : MonoBehaviour
+public class PunchRobo : EnemyDamage
 {
     private Animator _anim;
     private Transform _player;
@@ -17,6 +17,11 @@ public class PunchRobo : MonoBehaviour
     private bool isRun = false;
     private int Count = 0;
     private Vector3 rotate;
+
+    [Header("HP"), SerializeField] int hpmax;
+    [Tooltip("現在のHP")] int nowhp;
+    [Tooltip("GameManagerのpointに加算される")] int point = 50;
+    [Tooltip("GameManagerのscoreに加算される")] int score = 25;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +46,13 @@ public class PunchRobo : MonoBehaviour
             if (isAttack && velocity.magnitude < 0.01)
             {
                _anim.SetBool("attack2",isAttack = false);
+               Count = 0;
             }
         }  
-        else if (distance > 20)
+        else if (distance < 30)
         {
             isRun = true;
+            _nav.speed = 10;
             _nav.SetDestination(_player.position);
             
         }
@@ -71,10 +78,31 @@ public class PunchRobo : MonoBehaviour
             Count++;
         }
         yield return new WaitForSeconds(5);
-        _nav.SetDestination(new Vector3(_player.position.x + 15,_player.position.y, _player.position.z + 15));
-        yield return new WaitForSeconds(1.7f);
+        _nav.SetDestination(new Vector3(_player.position.x + 4,_player.position.y, _player.position.z + 4));
+        yield return new WaitForSeconds(1f);
         _anim.SetBool("attack2",isAttack = true);
         yield return new WaitForSeconds(1);
+        _nav.speed = 30;
         _nav.SetDestination(_player.position);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Debug.Log("hit");
+            nowhp = Damage(hpmax);
+            hpmax = nowhp;
+
+        }
+    }
+
+    public override void Point()
+    {
+        FindObjectOfType<GameManager>().Point(point);
+    }
+    public override void Score()
+    {
+        FindObjectOfType<GameManager>().Score(score);
     }
 }

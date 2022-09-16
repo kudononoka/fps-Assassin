@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletSpeed : MonoBehaviour
 {
-    private float _speed = 100;
+    private float _speed = 1000;
     //private LayerMask layerMask = 0;
     private GameObject _camera;
     private Quaternion _forward;
@@ -13,7 +13,7 @@ public class BulletSpeed : MonoBehaviour
     // private Vector3 vec;*/
     private int gameObjectdamage;
     private GameObject _sphere;
-    
+    [Header("着弾した時のパーティカル"), SerializeField] ParticleSystem endPartical;
     
     // Start is called before the first frame update
 
@@ -49,10 +49,20 @@ public class BulletSpeed : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _sphere.transform.position, _speed * Time.deltaTime);
         }
-  
-        Destroy(gameObject, 1.5f);
+        if (gameObject != null)
+        {
+            Destroy(gameObject, 1.5f);
+        }
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            endPartical.Play();
+            Destroy(this.gameObject);
+        }
+    }
+
 
 }

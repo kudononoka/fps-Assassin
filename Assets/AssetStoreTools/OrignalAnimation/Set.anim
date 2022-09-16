@@ -30,6 +30,22 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/SciFiGunLightBlue
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -67.448006, y: 78.29301, z: 90}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -47,6 +63,22 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/SciFiGunLightBlue
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.102, y: 0.174, z: -0.054}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
   m_ScaleCurves: []
   m_FloatCurves:
   - curve:
@@ -1422,7 +1454,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.2738016
+        value: -0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1441,7 +1473,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.81702006
+        value: 0.69
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1517,7 +1549,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.1
+        value: -0.17
         inSlope: -9.692214
         outSlope: -9.692214
         tangentMode: 0
@@ -1536,7 +1568,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.02
+        value: 1.47
         inSlope: -1.611396
         outSlope: -1.611396
         tangentMode: 0
@@ -1593,7 +1625,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.9460571
+        value: -0.24
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1688,7 +1720,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.39644203
+        value: -0.44
         inSlope: -5.179961
         outSlope: -5.179961
         tangentMode: 0
@@ -1707,7 +1739,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5854842
+        value: 0.37
         inSlope: 0.6310039
         outSlope: 0.6310039
         tangentMode: 0
@@ -1726,7 +1758,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4593337
+        value: 0.56
         inSlope: -0.5569732
         outSlope: -0.5569732
         tangentMode: 0
@@ -3122,7 +3154,21 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
+      path: 2489114870
+      attribute: 1
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
       path: 3408758594
+      attribute: 4
+      script: {fileID: 0}
+      typeID: 4
+      customType: 4
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 2489114870
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -4950,7 +4996,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.2738016
+        value: -0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4969,7 +5015,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.81702006
+        value: 0.69
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -5045,7 +5091,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.1
+        value: -0.17
         inSlope: -9.692214
         outSlope: -9.692214
         tangentMode: 0
@@ -5064,7 +5110,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.02
+        value: 1.47
         inSlope: -1.611396
         outSlope: -1.611396
         tangentMode: 0
@@ -5121,7 +5167,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.9460571
+        value: -0.24
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -5216,7 +5262,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.39644203
+        value: -0.44
         inSlope: -5.179961
         outSlope: -5.179961
         tangentMode: 0
@@ -5235,7 +5281,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5854842
+        value: 0.37
         inSlope: 0.6310039
         outSlope: 0.6310039
         tangentMode: 0
@@ -5254,7 +5300,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4593337
+        value: 0.56
         inSlope: -0.5569732
         outSlope: -0.5569732
         tangentMode: 0
@@ -6237,6 +6283,120 @@ AnimationClip:
     path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/SciFiGunLightBlue
     classID: 4
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.102
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.174
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.y
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.054
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -67.448006
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.x
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 78.29301
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 90
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.z
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
       serializedVersion: 2
@@ -6266,6 +6426,36 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
     path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/SciFiGunLightBlue
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: Armature/root/Hips/Spine/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/HornetRifle
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

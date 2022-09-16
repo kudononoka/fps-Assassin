@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Bullet
   - wall2
+  - Icon
+  - Laser
   layers:
   - Default
   - TransparentFX

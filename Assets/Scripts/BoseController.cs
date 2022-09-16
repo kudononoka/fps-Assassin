@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BoseController : EnemyDamage
+public class BoseController : MonoBehaviour
 {
     private Animator _anim;
     private Rigidbody _rb;

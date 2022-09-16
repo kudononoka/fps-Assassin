@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BulletControle : MonoBehaviour
 {
-    [Header("銃弾"),SerializeField]
+    [Header("銃弾"), SerializeField]
     private GameObject _bulletPrefab;
-   [SerializeField] PlayerController _playerController;
+    private AudioSource _bulletClip;
+   //[SerializeField] PlayerController _playerController;
     private float time;
     /*private float distance = 100;
     private Vector2 vec2;
@@ -16,12 +17,20 @@ public class BulletControle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _bulletClip = GetComponent<AudioSource>();
        
         //vec2 = new Vector2(Screen.width / 2, Screen.height / 2);
     }
     private void Update()
     {
+       
+            if (Input.GetButtonDown("Shoot"))
+            {
+                _bulletClip.Play();
+                Instantiate(_bulletPrefab, gameObject.transform.position, gameObject.transform.rotation);
+                //StartCoroutine("BulletGeneration");
+            }
+        
         /*Ray ray = Camera.main.ScreenPointToRay(vec2);
         RaycastHit hit;
         vec = ray.direction;
@@ -40,20 +49,7 @@ public class BulletControle : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_playerController.IsSet)
-        {
-            if (Input.GetButton("Shoot"))
-            {
-                Debug.Log("bullet");
-                time += Time.deltaTime;
-                if (time > 0.1)
-                {
-                    Instantiate(_bulletPrefab, gameObject.transform.position, gameObject.transform.rotation);
-                    time = 0;
-                }
-                //StartCoroutine("BulletGeneration");
-            }
-        }
+        
     }
 
 
