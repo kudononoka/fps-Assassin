@@ -14,7 +14,7 @@ public class MiniSphere : EnemyDamage
    
     private float _playAttackIrr = 4;
     private float _attackTimer = 0;
-    [SerializeField] EnemyIntrusionCollider _IntrusionCollider;
+   
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
@@ -27,8 +27,7 @@ public class MiniSphere : EnemyDamage
         _anim = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _nav = GetComponent<NavMeshAgent>();
-        _irradiation = GameObject.Find("Irradiation").GetComponent<ParticleSystem>();
-        
+        _irradiation = transform.GetChild(1).GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -40,26 +39,31 @@ public class MiniSphere : EnemyDamage
         Vector3 retarget = new Vector3(target.x, target.y + 0.9f, target.z);
         transform.rotation = Quaternion.LookRotation(retarget);
         float rot = transform.localEulerAngles.x;
+        float distance = Vector3.Distance(transform.position, _player.position);
 
-
-        if (_IntrusionCollider.IsIntrusion )
+        if (distance < 10 && Mathf.Abs(target.x) > 4  && Mathf.Abs(target.y) > 4 )
         {
             _nav.SetDestination(transform.position);
+            Debug.Log(_attackTimer);
             _attackTimer += Time.deltaTime;
             if (_attackTimer > _playAttackIrr)
             {
                 _irradiation.Play();
                 _attackTimer = 0;
             }
-            else if (_attackTimer < _playAttackIrr - 1)
-            {
-
-                transform.RotateAround(_player.position, Vector3.up, 0.1f + Time.deltaTime);
-            }
         }
-        else if (!_IntrusionCollider.IsIntrusion )
+        else if (distance >= 10)
         {
             _nav.SetDestination(_player.position);
+            if(distance < 15)
+            {
+                _attackTimer += Time.deltaTime;
+                if (_attackTimer > _playAttackIrr)
+                {
+                    _irradiation.Play();
+                    _attackTimer = 0;
+                }
+            }
         }
         else
         {

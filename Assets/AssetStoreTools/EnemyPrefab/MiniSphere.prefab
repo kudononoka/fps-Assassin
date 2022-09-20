@@ -177,12 +177,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795389857466524976}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.4993305, y: 2.49, z: 128.46747}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3188183583693678609}
   - {fileID: 562026822197954242}
+  - {fileID: 3188183583693678609}
   - {fileID: 9190311297482959798}
   - {fileID: 4059097691625641529}
   - {fileID: 7792410420066103247}
@@ -234,8 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb4cc3f54ee5056419cb869ebeb30ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _IntrusionCollider: {fileID: 0}
-  hpmax: 10
+  hpmax: 1
 --- !u!195 &795389857466524979
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -246,7 +245,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.32
-  m_Speed: 1
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 10
@@ -319,6 +318,7 @@ GameObject:
   - component: {fileID: 3188183583693678609}
   - component: {fileID: 3188183583693678611}
   - component: {fileID: 3188183583693678610}
+  - component: {fileID: 3861821697650696016}
   m_Layer: 0
   m_Name: Irradiation
   m_TagString: Laser
@@ -338,7 +338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4418755832337618723}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &3188183583693678611
 ParticleSystem:
@@ -4044,7 +4044,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -5061,6 +5061,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &3861821697650696016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3188183583693678608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb03efc80f4ac643b27bd8ef971c635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3765336947630206044
 GameObject:
   m_ObjectHideFlags: 0
@@ -5333,7 +5345,7 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4418755832337618723}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3289757442892958853
 SkinnedMeshRenderer:

@@ -8,6 +8,9 @@ public class Raycast : MonoBehaviour
     public LayerMask layerMask = 1 << 0;
     private float distance = 1000;
     [SerializeField] GameObject _sphere;
+    [SerializeField] GameObject _rayInstate;
+    Vector3 _raypos;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,30 +20,21 @@ public class Raycast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        Ray ray = new Ray(transform.position, transform.forward);
+        _raypos = _rayInstate.transform.position;
+        Ray ray = new Ray(_raypos, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, distance,layerMask))
         {
-            
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 1f);
+            Debug.Log(hit.collider.gameObject.name);
             _sphere.transform.position = hit.point;
-            /*if (hit.collider != null)
-            {
-                _sphere.SetActive(true);
-                _sphere.transform.position = hit.point;
-            }
-            else
-            {
-                _sphere.SetActive(false);
-            }*/
-
         }
         if (hit.collider == null)
         {
+
             Debug.Log("hit.collider null!");
             _sphere.transform.position = Vector3.zero;
         }
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.green, 5, false);
 
     }
 }

@@ -37,7 +37,7 @@ public class BulletSpeed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            //transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+            
         
         if( _sphere.transform.position == Vector3.zero)
         {
@@ -60,6 +60,10 @@ public class BulletSpeed : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             endPartical.Play();
+            Destroy(this.gameObject,0.1f);
+        }
+        if(collision.gameObject)
+        {
             Destroy(this.gameObject);
         }
     }
