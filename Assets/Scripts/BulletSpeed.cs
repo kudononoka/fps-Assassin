@@ -13,7 +13,7 @@ public class BulletSpeed : MonoBehaviour
     // private Vector3 vec;*/
     private int gameObjectdamage;
     private GameObject _sphere;
-    [Header("着弾した時のパーティカル"), SerializeField] ParticleSystem endPartical;
+     ParticleSystem endPartical;
     
     // Start is called before the first frame update
 
@@ -24,6 +24,7 @@ public class BulletSpeed : MonoBehaviour
     {
         _sphere = GameObject.Find("Sphere");
         _camera = GameObject.Find("Main Camera");
+        endPartical = transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
 
@@ -49,24 +50,30 @@ public class BulletSpeed : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _sphere.transform.position, _speed * Time.deltaTime);
         }
-        if (gameObject != null)
+        if(gameObject != null)
         {
-            Destroy(gameObject, 1.5f);
+            Destroy(gameObject, 0.2f);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    
+    
+    private void OnCollisionEnter(Collision other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            endPartical.Play();
-            Destroy(this.gameObject,0.1f);
+            
+            
+            StartCoroutine(ParticleTime());
         }
-        if(collision.gameObject)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 
+    IEnumerator ParticleTime()
+    {
+        endPartical.Play();
+        yield return new WaitForSeconds(0.25f);
+        Destroy(this.gameObject);
+    }
 
 }

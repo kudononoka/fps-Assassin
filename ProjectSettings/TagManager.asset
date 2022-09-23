@@ -9,6 +9,8 @@ TagManager:
   - wall2
   - Icon
   - Laser
+  - PunchRobo
+  - Bomb
   layers:
   - Default
   - TransparentFX

@@ -4,10 +4,21 @@ using UnityEngine;
 
 public abstract class EnemyDamage : MonoBehaviour
 {
-    private int damage = 1; public int enemyDamage { get { return damage; } set { damage = value; } }
+    int damage = 1; 
     public abstract void Point();
+    private BulletPowerUp powerUp;
     public abstract void Score();
+    ParticleSystem dead;
+    ParticleSystem dead2;
 
+    private void OnEnable()
+    {
+        powerUp = GameObject.Find("Item").GetComponent<BulletPowerUp>();
+        damage = powerUp.DamageNum;
+        dead = transform.GetChild(1).GetComponent<ParticleSystem>();
+        dead2 = transform.GetChild(2).GetComponent<ParticleSystem>();
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,13 +40,20 @@ public abstract class EnemyDamage : MonoBehaviour
         if (hp <= 0)
         {
             Point();
-            Destroy(gameObject);
-           
+            GameManager.EnemyNum++;
+            StartCoroutine(Dead());
         }
         
         return hp;
     }
 
-
+    IEnumerator Dead()
+    {
+        
+        dead.Play();
+        dead2.Play();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
    
 }

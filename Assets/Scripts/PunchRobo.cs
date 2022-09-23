@@ -8,15 +8,14 @@ public class PunchRobo : EnemyDamage
     private Animator _anim;
     private Transform _player;
     private NavMeshAgent _nav;
-    private Vector3 _pastPosition;
-    private float speed = 5f;
-    private bool attackstop;
+    
+    
+    
     private float attackTimer;
-    private float attackPlayTime = 4;
-    private bool isAttack;
-    private bool isRun = false;
-    private int Count = 0;
-    private Vector3 rotate;
+    private float attackPlayTime = 5;
+    
+    
+    
 
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
@@ -28,63 +27,44 @@ public class PunchRobo : EnemyDamage
         _anim = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _nav = GetComponent<NavMeshAgent>();
-        _pastPosition = transform.position;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         float distance = Vector3.Distance(transform.position, _player.position);
-        Vector3 nowpos = transform.position;
-        Vector3 velocity = (nowpos - _pastPosition) / Time.deltaTime;
-        if (distance < 3)
+        
+        if(distance < 1.5)
         {
-         
-            StartCoroutine(Attack());
-            Debug.Log("ぬけた！");
-            if (isAttack && velocity.magnitude < 0.01)
+            _nav.SetDestination(transform.position);
+            attackTimer += Time.deltaTime;
+            if(attackTimer > attackPlayTime)
             {
-               _anim.SetBool("attack2",isAttack = false);
-               Count = 0;
+                _anim.SetTrigger("attack");
+                attackTimer = 0;    
             }
-        }  
-        else if (distance < 30)
+        }
+        if (distance < 15)
         {
-            isRun = true;
-            _nav.speed = 10;
             _nav.SetDestination(_player.position);
+            _anim.SetFloat("rotateattack", _nav.velocity.magnitude);
             
         }
-
-        
-
-        if (isRun)
+        if (distance < 100)
         {
-            _anim.SetTrigger("run");
-            
+            _nav.SetDestination(_player.position);
         }
-        _anim.SetFloat("runstart", velocity.magnitude);
-        _pastPosition = nowpos;
-
-        
+        else
+        {
+            _nav.SetDestination(transform.position);
+        }
+        _anim.SetFloat("runstart", _nav.velocity.magnitude);
     }
     
-    IEnumerator Attack()
-    {
-        if(Count == 0)
-        { 
-            _anim.SetTrigger("attack");
-            Count++;
-        }
-        yield return new WaitForSeconds(5);
-        _nav.SetDestination(new Vector3(_player.position.x + 4,_player.position.y, _player.position.z + 4));
-        yield return new WaitForSeconds(1f);
-        _anim.SetBool("attack2",isAttack = true);
-        yield return new WaitForSeconds(1);
-        _nav.speed = 30;
-        _nav.SetDestination(_player.position);
-    }
+    
+
 
     private void OnCollisionEnter(Collision collision)
     {

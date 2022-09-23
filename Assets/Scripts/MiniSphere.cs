@@ -27,7 +27,7 @@ public class MiniSphere : EnemyDamage
         _anim = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _nav = GetComponent<NavMeshAgent>();
-        _irradiation = transform.GetChild(1).GetComponent<ParticleSystem>();
+        _irradiation = transform.GetChild(3).GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame

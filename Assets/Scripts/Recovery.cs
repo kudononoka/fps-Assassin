@@ -6,6 +6,8 @@ public class Recovery : ItemBase
 {
     [Header("回復薬費用"), SerializeField]
     int _cost;
+    [Header("回復量"), SerializeField]
+    int recoveryAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +23,6 @@ public class Recovery : ItemBase
     public void CostPoint()
     {
         FindObjectOfType<GameManager>().CostPoint(_cost);
+        FindObjectOfType<PlayerHP>().Recovery(recoveryAmount);
     }
 }

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 43bfc282f77163341a7affadbd0d7513
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 239SchabloneAl
+  fontNames:
+  - 239SchabloneAl
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 7a0f799854245a14a8af17210c1d6c94, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -6,7 +6,7 @@ public class BulletPowerUp : ItemBase
 {
     [Header("弾丸パワーアップ費用"), SerializeField]
     int _cost;
-    
+    int damage = 1; public int DamageNum => damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,6 @@ public class BulletPowerUp : ItemBase
     public void CostPoint()
     {
         FindObjectOfType<GameManager>().CostPoint(_cost);
-        FindObjectOfType<EnemyDamage>().enemyDamage += 2;
+        damage += 2;
     }
 }
