@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class BoseController : EnemyDamage
 {
     private Animator _anim;
-    private Rigidbody _rb;
+    private GameObject _bose;
     private Transform _player;
     private NavMeshAgent _agent;
     [SerializeField] GameObject bombPrefab;
@@ -22,6 +22,8 @@ public class BoseController : EnemyDamage
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
     [Tooltip("GameManagerのscoreに加算される")] int score = 5;
 
+    ParticleSystem deadBose;
+    ParticleSystem dead2Bose;
     /*private float speed = 10f;
     private float gravity = 9.8f;
     private float _Velocity_0 = 1000;*/
@@ -29,10 +31,13 @@ public class BoseController : EnemyDamage
     private void OnEnable()
     {
         _anim = transform.root.gameObject.GetComponent<Animator>();
-        _rb = transform.root.gameObject.GetComponent<Rigidbody>();
+        _bose = transform.root.gameObject;
         _agent = transform.root.gameObject.GetComponent<NavMeshAgent>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         BombPos = GameObject.Find("BombPos").GetComponent<Transform>();
+
+        deadBose = transform.GetChild(1).GetComponent<ParticleSystem>();
+        dead2Bose = transform.GetChild(2).GetComponent<ParticleSystem>();
     }
    
 
@@ -96,14 +101,26 @@ public class BoseController : EnemyDamage
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("hit");
-            nowhp = Damage(hpmax);
-            hpmax = nowhp;
+            Debug.Log("当たりました");
+            hpmax--;
+            if (hpmax <= 0)
+            {
+                StartCoroutine(BoseDead());
+            }
         }
+    }
+
+    IEnumerator BoseDead()
+    {
+
+        deadBose.Play();
+        dead2Bose.Play();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(_bose);
     }
 
     public override void Point()

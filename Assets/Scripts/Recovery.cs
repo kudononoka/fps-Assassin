@@ -22,7 +22,10 @@ public class Recovery : ItemBase
 
     public void CostPoint()
     {
-        FindObjectOfType<GameManager>().CostPoint(_cost);
-        FindObjectOfType<PlayerHP>().Recovery(recoveryAmount);
+        if (GameManager.point > 0)
+        {
+            FindObjectOfType<GameManager>().CostPoint(_cost);
+            FindObjectOfType<PlayerHP>().Recovery(recoveryAmount);
+        }
     }
 }

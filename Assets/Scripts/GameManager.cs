@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-    [SerializeField] int _score = 0; public static int score { get; }
-    [SerializeField] int _point = 0;
-    int damageNumber; public static int damageNum { get; }
-    private static int enemyNumber; public static int EnemyNum { get { return enemyNumber; } set { enemyNumber = value; } }
+    [SerializeField] private static int _score = 0; public static int score { get { return _score; } }
+    [SerializeField] private static int _point = 0; public static int point { get { return _point; } }
+    private static int damageNumber = 0; public static int damageNum { get { return damageNumber; } }
+    private static int enemyNumber = 0; public static int EnemyNum { get { return enemyNumber; } set { enemyNumber = value; } }
     [SerializeField] GameObject[] _enemies;
     [Header("出現範囲"), SerializeField] float movingRange;
+    [Header("出現範囲"), SerializeField] float movingRange2;
 
     [SerializeField] GameObject _sellCanvas;
     [SerializeField] GameObject _normalCanvas;
@@ -24,11 +26,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text StageCountText;
     [SerializeField] PlayerHP playerHp;
 
+    private int SurvivingEnemies = 0;
+
     [Tooltip("Stageが変わるごとにPlayerの位置を初期化する")]
     Transform player;
 
     
-    private int _stageCount = 0; public int StageCount => _stageCount;
+    private int _stageCount = 1; public int StageCount => _stageCount;
 
     private float _timer = 0;
     [Header("戦闘時間"), SerializeField] float _battleTime = 60;
@@ -63,45 +67,61 @@ public class GameManager : MonoBehaviour
         _normalCanvas.SetActive(true);
         _sellCanvas.SetActive(false);
         isGame = true;
-        _point = 10000;
+ 
+        _timer = _battleTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _timer += Time.deltaTime;
-        SellCanvasPointText.text = $"{_point}";
-        MainCanvasPointText.text = $"{_point}";
-        MainCanvasScoreText.text = $"{_score}";
+        _timer -= Time.deltaTime;
+        SellCanvasPointText.text = $"Point {_point}";
+        MainCanvasPointText.text = $"Point {_point}";
+        MainCanvasScoreText.text = $"Score {_score}";
         TimerText.text = String.Format("{0:00}", (int)_timer);
         StageCountText.text = $"{_stageCount}";
-        if (_timer > _breakTime && isBreak)
+        if (_timer <= 0 && isBreak)
         {
             EnemyInstate();
             player.position = Vector3.zero;
             _normalCanvas.SetActive(true);
             _sellCanvas.SetActive(false);
-            _timer = 0;
+            _timer = _battleTime;
             isBreak = !isBreak;
         }
-        if (_timer > _battleTime && !isBreak && _stageCount < 3)
+        if (_timer <= 0 && !isBreak)
         {
             GameObjectFind("Enemy");
             GameObjectFind("Bomb");
-            _normalCanvas.SetActive(false);
-            _sellCanvas.SetActive(true);
-            _timer = 0;
-            _stageCount++;
-            isBreak = !isBreak;
+            Debug.Log(SurvivingEnemies);
+            if(SurvivingEnemies == 0)
+            {
+                Score(500);
+            }
+            
+            
+            
+            if (_stageCount == 3)
+            {
+                SceneManager.LoadScene("Result");
+            }
+            else
+            {
+                _timer = _breakTime;
+                _normalCanvas.SetActive(false);
+                _sellCanvas.SetActive(true);
+
+                _stageCount++;
+                isBreak = !isBreak;
+            }
         }
         damageNumber = playerHp.DamageNum;
-        if(_stageCount == 3 && !isBreak)
+        
+        if(!isGame)
         {
-            IsGame = false;
+            SceneManager.LoadScene("Result");
         }
-
-
-        damageNumber = playerHp.DamageNum;
+        
     }
 
     public void Point(int point)
@@ -122,15 +142,20 @@ public class GameManager : MonoBehaviour
 
     void GameObjectFind(string name)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(name);
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy == null)
+        
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(name);
+            foreach (GameObject enemy in enemies)
             {
-                return;
+                if (enemy == null)
+                {
+                    return;
+                }
+                SurvivingEnemies++;
+                Destroy(enemy);
             }
-            Destroy(enemy);
-        }
+        
+        
+        
     }
 
     void EnemyInstate()
@@ -140,11 +165,12 @@ public class GameManager : MonoBehaviour
            
             if (enemy.name == "MiniSphere" || enemy.name == "PunchRobo (1)")
             {
-                int num = UnityEngine.Random.Range(5, 7);
+                int num = UnityEngine.Random.Range(10, 15);
                 for (int i = 0; i < num; i++)
                 {
                     Vector3 position = new Vector3(UnityEngine.Random.Range(-movingRange, movingRange), 0, UnityEngine.Random.Range(-movingRange, movingRange));
-                    Instantiate(enemy, position, Quaternion.identity);
+                    Vector3 PerfectPos = RangeSareti(position);
+                    Instantiate(enemy, PerfectPos, Quaternion.identity);
                 }
             }
             else if(enemy.name == "robotSphere")
@@ -153,5 +179,16 @@ public class GameManager : MonoBehaviour
                 Instantiate(enemy, position, Quaternion.identity);
             }
         }
+    }
+
+    private Vector3 RangeSareti(Vector3 pos)
+    {
+
+        while(Vector3.Distance(player.position, pos) < 20)
+        {
+            pos = new Vector3(UnityEngine.Random.Range(-movingRange, movingRange), 0, UnityEngine.Random.Range(-movingRange, movingRange));
+        }
+        return pos;
+
     }
 }

@@ -34,12 +34,12 @@ public class PlayerController : MonoBehaviour
     private float _runSpeed = 7f;
     private bool isSet = false; public bool IsSet { get { return isSet; } set { isSet = value; } }
 
-    
+    private bool isAvoidance;
 
-    
-    
-    
-    
+   [SerializeField] GameObject _particle;
+
+    private ParticleSystem _particleSystem;
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _normal.enabled = true;
         _target.enabled = false;
         _moveSpeed = _walkSpeed;
+        _particleSystem = _particle.GetComponent<ParticleSystem>();
     }
     private void Update()
     {
@@ -82,35 +83,40 @@ public class PlayerController : MonoBehaviour
             float _rotateSpeed = 600 * Time.deltaTime;
             Vector3 fow = _rb.velocity;
 
-            if (fow != Vector3.zero)
+            /*if (fow != Vector3.zero)
             {
 
                 _rotation = Quaternion.LookRotation(fow, Vector3.up);
                 
-            }
+            }*/
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotation, _rotateSpeed);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotation, _rotateSpeed);
 
+            transform.rotation = _forward;  //向きを固定
+
+
+            
 
             _anim.SetFloat("walk", _rb.velocity.magnitude);
 
-            if (_rb.velocity.magnitude > 0.1)
+            if(_rb.velocity.magnitude > 0.1)
             {
-
-                if (Input.GetButton("Run"))
+                if(Input.GetButton("Run"))
                 {
-                    _anim.SetBool("run", true);
+                    _anim.SetBool("run",true);
                     _moveSpeed = _runSpeed;
                 }
-
                 else
                 {
-                    _anim.SetBool("run", false);
+                    _anim.SetBool("run",false);
                     _moveSpeed = _walkSpeed;
                 }
-
             }
-
+            
+            if(Input.GetButtonDown("Press"))
+            {
+                StartCoroutine(Avoidance());
+            }
 
         }
         
@@ -144,6 +150,27 @@ public class PlayerController : MonoBehaviour
 
         
     }
+    IEnumerator Avoidance()
+    {
+        _anim.SetBool("avoidance", isAvoidance = true);
+        _particle.transform.rotation = Quaternion.LookRotation(_rb.velocity);
+        _particleSystem.Play();
+        if(isAvoidance)
+        {
+            if (_rb.velocity.magnitude > 0.1)
+            {
+                transform.Translate(_rb.velocity * _moveSpeed* 15 * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector3.right * _moveSpeed * 15 * Time.deltaTime);
+            }
+        }
+        yield return new WaitForSeconds(0.3f);
+        
+        _anim.SetBool("avoidance", isAvoidance = false);
+    }
 
-    
+
+
 }

@@ -41,6 +41,7 @@ public class PlayerHP : MonoBehaviour
     public void Recovery(int recoveryAmount)
     {
         _nowhp += recoveryAmount;
+        _hpSlider.value = _nowhp;
     }
 
     public void LaserCollisionEnter()
