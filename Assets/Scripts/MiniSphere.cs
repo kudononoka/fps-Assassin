@@ -18,7 +18,7 @@ public class MiniSphere : EnemyDamage
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
-    [Tooltip("GameManagerのscoreに加算される")] int score = 5;
+    [Tooltip("GameManagerのscoreに加算される")] int score = 10;
     
  
     // Start is called before the first frame update
@@ -76,7 +76,7 @@ public class MiniSphere : EnemyDamage
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("hit");
+           
             nowhp = Damage(hpmax);
             hpmax = nowhp;
             

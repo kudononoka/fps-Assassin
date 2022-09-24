@@ -24,6 +24,7 @@ public class BoseController : EnemyDamage
 
     ParticleSystem deadBose;
     ParticleSystem dead2Bose;
+    AudioSource audioBose;
     /*private float speed = 10f;
     private float gravity = 9.8f;
     private float _Velocity_0 = 1000;*/
@@ -38,6 +39,7 @@ public class BoseController : EnemyDamage
 
         deadBose = transform.GetChild(1).GetComponent<ParticleSystem>();
         dead2Bose = transform.GetChild(2).GetComponent<ParticleSystem>();
+        audioBose = transform.GetChild(1).GetComponent<AudioSource>();
     }
    
 
@@ -66,7 +68,7 @@ public class BoseController : EnemyDamage
                     Count--;
                 }
 
-                Debug.Log("目的地についた");
+               
                 Vector3 randomPos = new Vector3(Random.Range(-movingRange, movingRange), 0, Random.Range(-movingRange, movingRange));
                 if (Vector3.Distance(randomPos, transform.position) > 50)
                 {
@@ -116,7 +118,7 @@ public class BoseController : EnemyDamage
 
     IEnumerator BoseDead()
     {
-
+        audioBose.Play();
         deadBose.Play();
         dead2Bose.Play();
         yield return new WaitForSeconds(0.5f);

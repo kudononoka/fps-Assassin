@@ -13,6 +13,7 @@ public class Bomb : EnemyDamage
 
     ParticleSystem deadBomb;
     ParticleSystem dead2Bomb;
+    AudioSource audioBomb;
 
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
     [Tooltip("GameManagerのscoreに加算される")] int score = 5;
@@ -27,7 +28,7 @@ public class Bomb : EnemyDamage
         
         deadBomb = transform.GetChild(1).GetComponent<ParticleSystem>();
         dead2Bomb = transform.GetChild(2).GetComponent<ParticleSystem>();
-
+        audioBomb = transform.GetChild(1).GetComponent<AudioSource>();
         
     }
 
@@ -49,6 +50,7 @@ public class Bomb : EnemyDamage
     public IEnumerator TriggerEnable()
     {
         _collider.enabled = true;
+        audioBomb.Play();
         deadBomb.Play();
         dead2Bomb.Play();
        yield return new WaitForSeconds(0.5f);

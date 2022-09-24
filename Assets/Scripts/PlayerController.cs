@@ -113,10 +113,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             
-            if(Input.GetButtonDown("Press"))
-            {
-                StartCoroutine(Avoidance());
-            }
+         
 
         }
         
@@ -150,26 +147,7 @@ public class PlayerController : MonoBehaviour
 
         
     }
-    IEnumerator Avoidance()
-    {
-        _anim.SetBool("avoidance", isAvoidance = true);
-        _particle.transform.rotation = Quaternion.LookRotation(_rb.velocity);
-        _particleSystem.Play();
-        if(isAvoidance)
-        {
-            if (_rb.velocity.magnitude > 0.1)
-            {
-                transform.Translate(_rb.velocity * _moveSpeed* 15 * Time.deltaTime);
-            }
-            else
-            {
-                transform.Translate(Vector3.right * _moveSpeed * 15 * Time.deltaTime);
-            }
-        }
-        yield return new WaitForSeconds(0.3f);
-        
-        _anim.SetBool("avoidance", isAvoidance = false);
-    }
+    
 
 
 

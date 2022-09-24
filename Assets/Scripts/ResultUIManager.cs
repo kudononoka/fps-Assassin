@@ -32,19 +32,19 @@ public class ResultUIManager : MonoBehaviour
     private string RankJudge(int killNum,int playerDamageNum,int score)
     {
         
-        if(killNum < 15 && playerDamageNum < 30 && score > 0)
+        if(killNum < 80 && playerDamageNum < 3000 && score > 0)
         {
             rank = "C";
         }
-        if (killNum < 20 && playerDamageNum < 15 && score > 200)
+        if (killNum < 100 && playerDamageNum < 800 && score > 3000)
         {
             rank = "B";
         }
-        if (killNum < 25 && playerDamageNum < 10 && score > 400)
+        if (killNum < 120 && playerDamageNum < 500 && score > 4000)
         {
             rank = "A";
         }
-        if (killNum < 30 && playerDamageNum < 5 && score > 800)
+        if (killNum > 120 && playerDamageNum < 300 && score > 5000)
         {
             rank = "S";
         }

@@ -67,8 +67,15 @@ public class GameManager : MonoBehaviour
         _normalCanvas.SetActive(true);
         _sellCanvas.SetActive(false);
         isGame = true;
- 
+       
         _timer = _battleTime;
+
+        _score = 0;
+        _point = 0;
+        SurvivingEnemies = 0;
+        damageNumber = 0;
+        enemyNumber = 0;
+        _stageCount = 1;
     }
 
     // Update is called once per frame

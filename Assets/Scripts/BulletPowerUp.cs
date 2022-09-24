@@ -21,7 +21,7 @@ public class BulletPowerUp : ItemBase
 
     public void CostPoint()
     {
-        if (GameManager.point > 0)
+        if (GameManager.point >= _cost)
         {
             FindObjectOfType<GameManager>().CostPoint(_cost);
             damage += 2;

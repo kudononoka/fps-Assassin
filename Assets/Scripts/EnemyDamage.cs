@@ -10,6 +10,7 @@ public abstract class EnemyDamage : MonoBehaviour
     public abstract void Score();
     ParticleSystem dead;
     ParticleSystem dead2;
+    AudioSource audio;
 
     private void OnEnable()
     {
@@ -17,7 +18,7 @@ public abstract class EnemyDamage : MonoBehaviour
         damage = powerUp.DamageNum;
         dead = transform.GetChild(1).GetComponent<ParticleSystem>();
         dead2 = transform.GetChild(2).GetComponent<ParticleSystem>();
-        
+        audio = transform.GetChild(1).GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,7 @@ public abstract class EnemyDamage : MonoBehaviour
     
     protected int Damage(int hp)
     {
-        Debug.Log("ダメージ");
+       
         Score();
         hp -= damage;
         if (hp <= 0)
@@ -49,7 +50,7 @@ public abstract class EnemyDamage : MonoBehaviour
 
     IEnumerator Dead()
     {
-        
+        audio.Play();
         dead.Play();
         dead2.Play();
         yield return new WaitForSeconds(0.5f);

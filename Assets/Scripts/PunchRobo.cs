@@ -19,7 +19,7 @@ public class PunchRobo : EnemyDamage
 
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
-    [Tooltip("GameManagerのpointに加算される")] int point = 50;
+    [Tooltip("GameManagerのpointに加算される")] int point = 20;
     [Tooltip("GameManagerのscoreに加算される")] int score = 25;
     // Start is called before the first frame update
     void Start()
@@ -70,7 +70,7 @@ public class PunchRobo : EnemyDamage
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("hit");
+          
             nowhp = Damage(hpmax);
             hpmax = nowhp;
 
