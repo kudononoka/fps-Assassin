@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MiniSphere : EnemyDamage
+public class MiniSphere : EnemyBase, Interface
 {
     Transform _player;
     NavMeshAgent _nav;
@@ -14,17 +14,18 @@ public class MiniSphere : EnemyDamage
 
     float _playAttack = 4;
     float _attackTimer = 0;
-   
+
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
     [Tooltip("GameManagerのscoreに加算される")] int score = 10;
-    
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _nav = GetComponent<NavMeshAgent>();
         _laser = transform.GetChild(1).GetComponent<ParticleSystem>();
+        nowhp = hpmax;
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class MiniSphere : EnemyDamage
         transform.rotation = Quaternion.LookRotation(target.normalized);
         float distance = Vector3.Distance(transform.position, _player.position);
 
-        if (distance < 10 && Mathf.Abs(velocity.x) > 4  && Mathf.Abs(velocity.y) > 4 ) //プレイヤーの真上に来ないように設定
+        if (distance < 10 && Mathf.Abs(velocity.x) > 4 && Mathf.Abs(velocity.y) > 4) //プレイヤーの真上に来ないように設定
         {
             _nav.SetDestination(transform.position);
             LaserAttack();
@@ -43,7 +44,7 @@ public class MiniSphere : EnemyDamage
         else if (distance >= 10)
         {
             _nav.SetDestination(_player.position);
-            if(distance < 15)
+            if (distance < 15)
             {
                 LaserAttack();
             }
@@ -64,12 +65,14 @@ public class MiniSphere : EnemyDamage
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+   
+   
+    public void EnemyDamage(int damage)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        nowhp -= damage;
+        if (nowhp <= 0)
         {
-            nowhp = Damage(hpmax);
-            hpmax = nowhp;
+            Damage();
         }
     }
 
@@ -81,6 +84,8 @@ public class MiniSphere : EnemyDamage
     {
         FindObjectOfType<GameManager>().Score(score);
     }
+
+    
 }
 
 

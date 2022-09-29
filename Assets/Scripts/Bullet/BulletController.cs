@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletSpeed : MonoBehaviour
+public class BulletController : MonoBehaviour
 {
     float _speed = 1000;
     
@@ -11,7 +11,10 @@ public class BulletSpeed : MonoBehaviour
     
     GameObject _sphere;
     ParticleSystem endPartical;
-  
+
+    [Header("弾丸パワーアップ費用"), SerializeField]
+    int _cost;
+    int bulletPower = 1;
     private void　Awake()
     {
         _sphere = GameObject.Find("Sphere");
@@ -51,6 +54,11 @@ public class BulletSpeed : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             StartCoroutine(ParticleTime());
+            Interface enemy = other.gameObject.GetComponent<Interface>();
+            if (enemy != null)
+            {
+                enemy.EnemyDamage(bulletPower);
+            }
         }
 
     }
@@ -60,6 +68,15 @@ public class BulletSpeed : MonoBehaviour
         endPartical.Play();
         yield return new WaitForSeconds(0.25f);
         Destroy(this.gameObject);
+    }
+
+    public void BulletPowerUP()
+    {
+        if (GameManager.point >= _cost)
+        {
+            FindObjectOfType<GameManager>().CostPoint(_cost);
+            bulletPower += 2;
+        }
     }
 
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 467905062662004809}
   - component: {fileID: 467905062662004808}
   - component: {fileID: 2916219063244523960}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MiniSphere
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6254441975706701701}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Up_Half_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7013138217263786676}
   - component: {fileID: 7208144931006117686}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4534042283140568228}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Down_Half_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5572270087445946646}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bone_Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 2398496532394798440}
   - component: {fileID: 2398496532394798441}
   - component: {fileID: 4098396259746011691}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Irradiation
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -5082,7 +5082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8842258521713138634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5113,7 +5113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7752215891389884764}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right_Arm 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5147,7 +5147,7 @@ GameObject:
   - component: {fileID: 6084320571592226545}
   - component: {fileID: 756420584034985731}
   - component: {fileID: 4720275560252030451}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MiniPphereParticle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -9959,7 +9959,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4704487979565584448}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left_Weapon_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9989,7 +9989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3835742765699106415}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left_Arm 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10021,7 +10021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3828992243631035202}
   - component: {fileID: 5725986552681306542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10110,7 +10110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773255304811316153}
   - component: {fileID: 2364406324768000510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10198,7 +10198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3740767008467034102}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Up_Half
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10230,7 +10230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3624975165453189244}
   - component: {fileID: 8518882725274079139}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10318,7 +10318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4753347493321779215}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10349,7 +10349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8285801559696469709}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DroneGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10380,7 +10380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6866373682039637002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right_Weapon_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10410,7 +10410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 716622784590315844}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Down_Half
   m_TagString: Untagged
   m_Icon: {fileID: 0}

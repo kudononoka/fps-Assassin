@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PunchRobo : EnemyDamage
+public class PunchRobo : EnemyBase,Interface
 {
     Animator _anim;
     Transform _player;
@@ -26,7 +26,7 @@ public class PunchRobo : EnemyDamage
         _anim = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _nav = GetComponent<NavMeshAgent>();
-        
+        nowhp = hpmax;
     }
 
     // Update is called once per frame
@@ -61,16 +61,14 @@ public class PunchRobo : EnemyDamage
         }
         _anim.SetFloat("runstart", _nav.velocity.magnitude);
     }
-    
-    
 
 
-    private void OnCollisionEnter(Collision collision)
+    public void EnemyDamage(int damage)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        nowhp -= damage;
+        if (nowhp <= 0)
         {
-            nowhp = Damage(hpmax);
-            hpmax = nowhp;
+            Damage();
         }
     }
 

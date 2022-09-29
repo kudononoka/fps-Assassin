@@ -149,16 +149,16 @@ public class GameManager : MonoBehaviour
     /// <param name="name">敵のタグ名</param>
     void GameObjectFind(string name)　
     {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(name);
-            foreach (GameObject enemy in enemies)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(name);
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy == null)
             {
-                if (enemy == null)
-                {
-                    return;
-                }
-                SurvivingEnemies++;
-                Destroy(enemy);
-            }   
+                return;
+            }
+            SurvivingEnemies++;
+            Destroy(enemy);
+        }
     }
 
     /// <summary>Stageが変わるごとに敵を生成</summary>

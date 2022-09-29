@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raycast : MonoBehaviour
+public class BulletRaycast : MonoBehaviour
 {
     public LayerMask layerMask = 1 << 0;
     [Tooltip("Rayの長さ")] float distance = 1000;

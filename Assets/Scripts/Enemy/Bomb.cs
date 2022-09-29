@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Bomb : EnemyDamage
+public class Bomb : EnemyBase
 {
     Rigidbody _rb;
     Transform _player; 
@@ -36,7 +36,7 @@ public class Bomb : EnemyDamage
         if (Vector3.Distance(transform.position, _player.position) < 3)
         {
             _collider.enabled = true;
-            Damage(_hp);
+            Damage();
         }
     }
 
@@ -45,7 +45,7 @@ public class Bomb : EnemyDamage
         if (collision.gameObject.CompareTag("Bullet"))
         {
             _collider.enabled = true; 
-            Damage(_hp);
+            Damage();
         }
     }
 

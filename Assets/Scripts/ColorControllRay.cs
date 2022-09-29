@@ -29,18 +29,15 @@ public class ColorControllRay : MonoBehaviour
             
             if(Physics.Raycast(ray, out hit,_distance,layerMask))
             {
-                if (hit.collider.gameObject.CompareTag("Enemy"))
+                enemyhit = true;
+                    
+                _go = hit.collider.gameObject;
+                    
+                mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+                if (Vector3.Distance(_go.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
                 {
-                    enemyhit = true;
-                    
-                    _go = hit.collider.gameObject;
-                    
-                    mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
-                    if (Vector3.Distance(_go.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
-                    {
                         
-                        mesh.material.color = new Color32(255, 255, 255, 100);
-                    }
+                    mesh.material.color = new Color32(255, 255, 255, 100);
                 }
             }
 
@@ -48,17 +45,16 @@ public class ColorControllRay : MonoBehaviour
             {
                 mesh.material.color = new Color32(255, 255, 255, 255);
                 enemyhit = false;
+                mesh = null;
             }
 
             /*Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit[] hits = Physics.RaycastAll(ray, _distance, layerMask);
-
+            Go[] hitmesh = hits[];
             //Debug.Log(hits.Length);
             foreach (var hit in hits)
             {
-                if (hit.collider.gameObject.CompareTag("Enemy"))
-                {
-
+                
                     _go = hit.collider.gameObject;
 
 
@@ -68,7 +64,6 @@ public class ColorControllRay : MonoBehaviour
                     {
                         mesh.material.color = new Color32(255, 255, 255, 100);
 
-                    }
                 }
             }
 

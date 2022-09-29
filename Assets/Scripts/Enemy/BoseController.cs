@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BoseController : EnemyDamage
+public class BoseController : EnemyBase,Interface
 {
     Animator _anim;
     NavMeshAgent _agent;
@@ -25,6 +25,7 @@ public class BoseController : EnemyDamage
         _anim = transform.root.transform.GetChild(0).GetComponent<Animator>();
         _agent = transform.root.transform.GetChild(0).GetComponent<NavMeshAgent>();
         _bombPos = GameObject.Find("BombPos").GetComponent<Transform>();
+        nowhp = hpmax;
     }
 
 
@@ -70,16 +71,14 @@ public class BoseController : EnemyDamage
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    public void EnemyDamage(int damage)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        nowhp -= damage;
+        if (nowhp <= 0)
         {
-            nowhp = Damage(hpmax);
-            hpmax = nowhp;
+            Damage();
         }
     }
-
-    
 
     public override void Point()
     {
