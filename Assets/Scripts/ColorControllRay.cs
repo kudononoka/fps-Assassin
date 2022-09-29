@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ColorControllRay : MonoBehaviour
 {
-   
-    private Transform _player;
+    [Tooltip("Playerの位置")] Transform _player;
     public LayerMask layerMask = 1 << 0;
-    private float _distance = 20;
+    [Tooltip("Rayの長さ")] float _distance = 20;
     private GameObject _go;
+    //private GameObject hitedenemyGo;
     private SkinnedMeshRenderer mesh;
-    bool enemyhit;
+    bool enemyhit = false;
+    //List<GameObject> hitedenemy = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()
@@ -25,39 +26,60 @@ public class ColorControllRay : MonoBehaviour
         {
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, _distance, layerMask))
+            
+            if(Physics.Raycast(ray, out hit,_distance,layerMask))
             {
-
-                if (hit.collider.CompareTag("Enemy"))
+                if (hit.collider.gameObject.CompareTag("Enemy"))
                 {
                     enemyhit = true;
-                    _go = hit.collider.gameObject;
-                    //Debug.Log("敵です");
-                    mesh = _go.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
-                    //Debug.Log(Vector3.Distance(hit.point, transform.position) + ":" + Vector3.Distance(_player.position, transform.position));
-                    if (Vector3.Distance(hit.point, transform.position) < Vector3.Distance(_player.position, transform.position))
-                    {
-                        mesh.material.color = new Color32(255, 255, 255, 122);
-                    }
-                    else if(mesh != null)
-                    {
-                        mesh.material.color = new Color32(255, 255, 255, 255);
-                    }
                     
-                }
-                else if(mesh != null)
-                {
-                    mesh.material.color = new Color32(255, 255, 255, 255);
+                    _go = hit.collider.gameObject;
+                    
+                    mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+                    if (Vector3.Distance(_go.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
+                    {
+                        
+                        mesh.material.color = new Color32(255, 255, 255, 100);
+                    }
                 }
             }
 
-            if (hit.collider == null && enemyhit && mesh != null)
+            if (mesh != null && enemyhit && hit.collider == null)
             {
                 mesh.material.color = new Color32(255, 255, 255, 255);
+                enemyhit = false;
             }
-            
+
+            /*Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit[] hits = Physics.RaycastAll(ray, _distance, layerMask);
+
+            //Debug.Log(hits.Length);
+            foreach (var hit in hits)
+            {
+                if (hit.collider.gameObject.CompareTag("Enemy"))
+                {
+
+                    _go = hit.collider.gameObject;
+
+
+                    mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+                    //Debug.Log(Vector3.Distance(hit.point, transform.position) + ":" + Vector3.Distance(_player.position, transform.position));
+                    if (Vector3.Distance(hit.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
+                    {
+                        mesh.material.color = new Color32(255, 255, 255, 100);
+
+                    }
+                }
+            }
+
+
+            if (mesh != null)
+            {
+                mesh.material.color = new Color32(255, 255, 255, 255);
+            }*/
+
         }
-        else if(FindObjectOfType<GameManager>().IsBreak)
+        else if (FindObjectOfType<GameManager>().IsBreak)
         {
             enemyhit = false;
         }

@@ -5,24 +5,23 @@ using UnityEngine.AI;
 
 public class PunchRobo : EnemyDamage
 {
-    private Animator _anim;
-    private Transform _player;
-    private NavMeshAgent _nav;
+    Animator _anim;
+    Transform _player;
+    NavMeshAgent _nav;
     
-    
-    
-    private float attackTimer;
-    private float attackPlayTime = 5;
-    
-    
-    
+    float attackTimer;
+    float attackPlayTime = 4;
+
+    [Tooltip("近距離攻撃を開始する距離")] float punchDistance = 1.5f;
+    [Tooltip("腕の回転攻撃を開始する距離")] float armAttackDistance = 15;
 
     [Header("HP"), SerializeField] int hpmax;
     [Tooltip("現在のHP")] int nowhp;
+
     [Tooltip("GameManagerのpointに加算される")] int point = 20;
     [Tooltip("GameManagerのscoreに加算される")] int score = 25;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _anim = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
@@ -36,7 +35,7 @@ public class PunchRobo : EnemyDamage
 
         float distance = Vector3.Distance(transform.position, _player.position);
         
-        if(distance < 1.5)
+        if(distance < punchDistance)
         {
             _nav.SetDestination(transform.position);
             attackTimer += Time.deltaTime;
@@ -46,7 +45,7 @@ public class PunchRobo : EnemyDamage
                 attackTimer = 0;    
             }
         }
-        if (distance < 15)
+        if (distance < armAttackDistance)
         {
             _nav.SetDestination(_player.position);
             _anim.SetFloat("rotateattack", _nav.velocity.magnitude);
@@ -70,10 +69,8 @@ public class PunchRobo : EnemyDamage
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-          
             nowhp = Damage(hpmax);
             hpmax = nowhp;
-
         }
     }
 

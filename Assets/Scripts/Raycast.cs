@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Raycast : MonoBehaviour
 {
-    private Vector2 vec2;
     public LayerMask layerMask = 1 << 0;
-    private float distance = 1000;
-    [SerializeField] GameObject _sphere;
-    [SerializeField] GameObject _rayInstate;
+    [Tooltip("Rayの長さ")] float distance = 1000;
+    [SerializeField,Tooltip("Rayの当たった場所を取得　銃弾の方向を決めるもの")] GameObject _sphere;
+    [SerializeField,Tooltip("Playerの所から生成")] GameObject _rayInstate;
     Vector3 _raypos;
     
     // Start is called before the first frame update
@@ -25,16 +24,13 @@ public class Raycast : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, distance,layerMask))
         {
-            //Debug.Log(hit.collider.gameObject.name);
             _sphere.transform.position = hit.point;
         }
         if (hit.collider == null)
-        {
-
-            //Debug.Log("hit.collider null!");
+        { 
             _sphere.transform.position = Vector3.zero;
         }
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.green, 5, false);
+        //Debug.DrawRay(ray.origin, ray.direction * distance, Color.green, 5, false);
 
     }
 }

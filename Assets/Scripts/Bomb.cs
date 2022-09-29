@@ -5,31 +5,24 @@ using UnityEngine.AI;
 
 public class Bomb : EnemyDamage
 {
-    private Rigidbody _rb;
-    private Transform _player; 
-    private SphereCollider _collider;
-    private NavMeshAgent _agent;
-    private SphereCollider _collision;
-
-    ParticleSystem deadBomb;
-    ParticleSystem dead2Bomb;
-    AudioSource audioBomb;
+    Rigidbody _rb;
+    Transform _player; 
+    [Tooltip("爆発のダメージ用のコライダー")]SphereCollider _collider;
+    NavMeshAgent _agent;
+   
+    private int _hp = 1;
 
     [Tooltip("GameManagerのpointに加算される")] int point = 10;
     [Tooltip("GameManagerのscoreに加算される")] int score = 5;
     // Start is called before the first frame update
-    void OnEnable()
+    
+    private void OnEnable()
     {
         _rb = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         _collider = GetComponent<SphereCollider>();
         _collider.enabled = false;
-        
-        deadBomb = transform.GetChild(1).GetComponent<ParticleSystem>();
-        dead2Bomb = transform.GetChild(2).GetComponent<ParticleSystem>();
-        audioBomb = transform.GetChild(1).GetComponent<AudioSource>();
-        
     }
 
     // Update is called once per frame
@@ -42,28 +35,17 @@ public class Bomb : EnemyDamage
 
         if (Vector3.Distance(transform.position, _player.position) < 3)
         {
-            StartCoroutine(TriggerEnable());
-            
+            _collider.enabled = true;
+            Damage(_hp);
         }
-    }
-
-    public IEnumerator TriggerEnable()
-    {
-        _collider.enabled = true;
-        audioBomb.Play();
-        deadBomb.Play();
-        dead2Bomb.Play();
-       yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
-
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-
-            StartCoroutine(TriggerEnable());
+            _collider.enabled = true; 
+            Damage(_hp);
         }
     }
 

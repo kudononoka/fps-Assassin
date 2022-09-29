@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneButton : MonoBehaviour
 {
     // Start is called before the first frame update
+    
     void Start()
     {
         
@@ -25,4 +26,5 @@ public class SceneButton : MonoBehaviour
     {
         SceneManager.LoadScene("Title");
     }
+    
 }

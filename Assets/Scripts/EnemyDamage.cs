@@ -5,21 +5,27 @@ using UnityEngine;
 public abstract class EnemyDamage : MonoBehaviour
 {
     int damage = 1; 
+    
+    [Tooltip("現在の銃弾の攻撃力")]BulletPowerUp powerUp;
     public abstract void Point();
-    private BulletPowerUp powerUp;
     public abstract void Score();
-    ParticleSystem dead;
-    ParticleSystem dead2;
-    AudioSource audio;
 
+    [Tooltip("死んだ時の爆発パーティカル")]ParticleSystem deadParticle;
+    [Tooltip("死んだ時の爆発音")] AudioClip deadAudio;
+    
     private void OnEnable()
     {
         powerUp = GameObject.Find("Item").GetComponent<BulletPowerUp>();
         damage = powerUp.DamageNum;
-        dead = transform.GetChild(1).GetComponent<ParticleSystem>();
-        dead2 = transform.GetChild(2).GetComponent<ParticleSystem>();
-        audio = transform.GetChild(1).GetComponent<AudioSource>();
+        deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
+        deadAudio = transform.root.GetComponent<AudioSource>().clip;
     }
+    private void Awake()
+    {
+        deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
+        deadAudio = transform.root.GetComponent<AudioSource>().clip;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,26 +41,20 @@ public abstract class EnemyDamage : MonoBehaviour
     
     protected int Damage(int hp)
     {
-       
         Score();
         hp -= damage;
         if (hp <= 0)
         {
             Point();
             GameManager.EnemyNum++;
-            StartCoroutine(Dead());
+            transform.root.position = transform.position;　//親オブジェクト(パーティカル、音)の位置を子オブジェクト位置に修正
+            deadParticle.Play();
+            transform.root.GetComponent<AudioSource>().PlayOneShot(deadAudio);　
+            Destroy(gameObject);
         }
         
         return hp;
     }
 
-    IEnumerator Dead()
-    {
-        audio.Play();
-        dead.Play();
-        dead2.Play();
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
-    }
    
 }

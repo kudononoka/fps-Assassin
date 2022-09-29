@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recovery : ItemBase
+public class Recovery : MonoBehaviour
 {
     [Header("回復薬費用"), SerializeField]
     int _cost;

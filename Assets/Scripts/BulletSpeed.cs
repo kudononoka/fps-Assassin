@@ -4,43 +4,30 @@ using UnityEngine;
 
 public class BulletSpeed : MonoBehaviour
 {
-    private float _speed = 1000;
-    //private LayerMask layerMask = 0;
-    private GameObject _camera;
-    private Quaternion _forward;
-    // private float distance = 100;
-    //private Vector2 vec2;
-    // private Vector3 vec;*/
-    private int gameObjectdamage;
-    private GameObject _sphere;
-     ParticleSystem endPartical;
+    float _speed = 1000;
     
-    // Start is called before the first frame update
-
-
-   
-
-    private void OnEnable()
+    GameObject _camera;
+    Quaternion _forward;
+    
+    GameObject _sphere;
+    ParticleSystem endPartical;
+  
+    private void　Awake()
     {
         _sphere = GameObject.Find("Sphere");
         _camera = GameObject.Find("Main Camera");
         endPartical = transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
-
     void Start()
     {
         _camera = GameObject.Find("Main Camera");
-        
-       // vec2 = new Vector2(Screen.width / 2, Screen.height / 2);
     }
 
-    // Update is called once per frame
     void Update()
     {
-            
         
-        if( _sphere.transform.position == Vector3.zero)
+        if( _sphere.transform.position == Vector3.zero) //Rayが当たっていないときシーンの真ん中らへんにに行くように設定
         {
             _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
             transform.rotation = _forward * Quaternion.AngleAxis(_camera.transform.eulerAngles.x, Vector3.right);
@@ -50,7 +37,8 @@ public class BulletSpeed : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _sphere.transform.position, _speed * Time.deltaTime);
         }
-        if(gameObject != null)
+
+        if(gameObject != null)　//他のオブジェクトに当たらなかった場合自動的に破壊
         {
             Destroy(gameObject, 0.2f);
         }
@@ -62,8 +50,6 @@ public class BulletSpeed : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            
-            
             StartCoroutine(ParticleTime());
         }
 

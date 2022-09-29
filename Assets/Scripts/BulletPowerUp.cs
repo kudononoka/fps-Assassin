@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPowerUp : ItemBase
+public class BulletPowerUp : MonoBehaviour
 {
     [Header("弾丸パワーアップ費用"), SerializeField]
     int _cost;

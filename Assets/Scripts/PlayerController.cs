@@ -4,51 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
-    /// <summary>重力</summary>
-    private Rigidbody _rb;
-    /// <summary>Playerのアニメーター</summary>
-    private Animator _anim;
-    [Tooltip("カメラの向きを取得")]
-    private Quaternion _forward;
-    [Tooltip("カメラの向きとプレイヤーの向きをそろえる")]
-    private Quaternion _rotation;
+    Rigidbody _rb;
+    Animator _anim;
+    [Tooltip("カメラのY軸方向の角度を取得する変数")]Quaternion _forward;
   　/// <summary>MainCamera</summary>
-    private GameObject _camera;
-    private Camera _cam;
-　　/// <summary>VirtualCamera 三人称視点</summary>
-  　[Tooltip("移動などに使うカメラ")]
-    private GameObject _cmSub;
+    GameObject _mainCamera;
+
+    /// <summary>VirtualCamera 三人称視点</summary>
+    [Tooltip("主要カメラ")]GameObject _cmMain;
+
     /// <summary> VirtualCamera 三人称視点　プレイヤー近くの背後の画面</summary>
-    [Tooltip("射撃時のカメラ")]
-    private GameObject _cmSubMain;
-    /// <summary>照準UI</summary>
-    private Image _target;
-    private Image _normal;
+    [Tooltip("ズーム時のカメラ")]GameObject _cmSub;
 
-    private int hp;
-    private int maxHp = 100;
-    private int minHp = 0;
+    [Tooltip("ズーム時の照準UI")]Image _target;
+    [Tooltip("普段時の照準UI")]Image _normal;
 
-    private float _moveSpeed = 3f;
-    private float _walkSpeed = 3f;
-    private float _runSpeed = 7f;
-    private bool isSet = false; public bool IsSet { get { return isSet; } set { isSet = value; } }
-
-    private bool isAvoidance;
-
-   [SerializeField] GameObject _particle;
-
-    private ParticleSystem _particleSystem;
-
+    Quaternion upperFoward;
+   
+    [Tooltip("移動速度")]private float _moveSpeed = 3f;
+    [SerializeField,Header("歩行速度"),Tooltip("歩行速度")]float _walkSpeed = 3f;
+    [SerializeField, Header("走行速度"), Tooltip("走行速度")]float _runSpeed = 7f;
+    bool isSet = false;  
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
-        _camera = GameObject.Find("Main Camera");
-        _cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        _cmSubMain = GameObject.Find("CM vcam1");
+        _mainCamera = GameObject.Find("Main Camera");
+        _cmMain = GameObject.Find("CM vcam1");
         _cmSub = GameObject.Find("CM vcam2");
         _cmSub.SetActive(false);
         _target = GameObject.Find("target").GetComponent<Image>();
@@ -56,7 +40,7 @@ public class PlayerController : MonoBehaviour
         _normal.enabled = true;
         _target.enabled = false;
         _moveSpeed = _walkSpeed;
-        _particleSystem = _particle.GetComponent<ParticleSystem>();
+        
     }
     private void Update()
     {
@@ -70,85 +54,97 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
        
-        _cmSub.transform.position = _cmSubMain.transform.position;
-        _cmSub.transform.rotation = _cmSubMain.transform.rotation;
+        _cmSub.transform.position = _cmMain.transform.position;
+        _cmSub.transform.rotation = _cmMain.transform.rotation;
         
-
         if (!isSet)
-
         {
-
-            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up);
-            _rb.velocity = _forward * new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
-            float _rotateSpeed = 600 * Time.deltaTime;
-            Vector3 fow = _rb.velocity;
-
-            /*if (fow != Vector3.zero)
-            {
-
-                _rotation = Quaternion.LookRotation(fow, Vector3.up);
-                
-            }*/
-
+            _forward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
+            _rb.velocity = _forward.normalized * new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
+            
+            //Vector3 fow = _rb.velocity;
+            //if (fow != Vector3.zero)
+            //{
+            //    _rotation = Quaternion.LookRotation(fow, Vector3.up); 
+            //}
+            //float _rotateSpeed = 600 * Time.deltaTime;
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotation, _rotateSpeed);
 
-            transform.rotation = _forward;  //向きを固定
 
+            transform.rotation = _forward; //プレイヤーの全体の向きをカメラと一緒にする
+            upperFoward = Quaternion.Euler(0, 40, 0); //上半身のアニメーション修正のため現在のプレイヤーの角度に上半身だけ+40度
 
-            
 
             _anim.SetFloat("walk", _rb.velocity.magnitude);
+            
+           
 
             if(_rb.velocity.magnitude > 0.1)
             {
-                if(Input.GetButton("Run"))
+                if (Input.GetButton("Run"))
                 {
-                    _anim.SetBool("run",true);
+                    _anim.SetBool("run", true);
                     _moveSpeed = _runSpeed;
                 }
                 else
                 {
-                    _anim.SetBool("run",false);
+                    _anim.SetBool("run", false);
                     _moveSpeed = _walkSpeed;
                 }
-            }
-            
-         
 
+                if (x < 1 && x > -1)
+                {
+                    _anim.SetBool("runningVelocity.z", true);
+                }
+                else if (x != 0)
+                {
+                    _anim.SetBool("runningVelocity.z", false);
+                    _anim.SetFloat("runningVelocity.x",x);
+                }
+               
+            }
+           
         }
         
 
 
-
+        //ズーム
         if (Input.GetButton("Upfream"))
         {
             isSet = true;
+
             _cmSub.SetActive(true);
-            _cam.fieldOfView = 5;
-            _cmSub.transform.position = _cmSubMain.transform.position;
-            _cmSub.transform.rotation = _cmSubMain.transform.rotation;
+            _cmSub.transform.position = _cmMain.transform.position;
+            _cmSub.transform.rotation = _cmMain.transform.rotation;
+
             _rb.velocity = new Vector3(x * _moveSpeed, 0, -z * _moveSpeed);
-            _forward = Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0, 10, 0);
-            transform.rotation = _forward * Quaternion.AngleAxis(_camera.transform.eulerAngles.x, Vector3.right);
+            _forward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up) * Quaternion.Euler(0, 10, 0);
+            transform.rotation = _forward * Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.x, Vector3.right);
+
             _normal.enabled = false;
             _target.enabled = true;
+
             _anim.SetBool("set", true);
         }
         else
         {
-            //_cam.fieldOfView = 16;
             _cmSub.SetActive(false);
+
             _anim.SetBool("set", false);
+
             _target.enabled = false;
             _normal.enabled = true;
+
             isSet = false;
-            //_subcamera.enabled = false;
         }
 
         
     }
-    
 
+    private void OnAnimatorIK(int layerIndex) //上半身のアニメーション修正のため
+    {
+        _anim.SetBoneLocalRotation(HumanBodyBones.Chest, upperFoward);
+    }
 
 
 }

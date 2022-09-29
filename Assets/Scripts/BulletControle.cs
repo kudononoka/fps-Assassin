@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class BulletControle : MonoBehaviour
 {
-    [Header("銃弾"), SerializeField]
-    private GameObject _bulletPrefab;
-    private AudioSource _bulletClip;
+    [Header("銃弾"), SerializeField]GameObject _bulletPrefab;
+    AudioSource _bulletClip;
    
-    
-    
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,26 +16,11 @@ public class BulletControle : MonoBehaviour
     }
     private void Update()
     {
-       
-            if (Input.GetButtonDown("Shoot"))
-            {
-                _bulletClip.Play();
-                Instantiate(_bulletPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        if (Input.GetButtonDown("Shoot"))
+        {
+            _bulletClip.Play();
+            Instantiate(_bulletPrefab, gameObject.transform.position, gameObject.transform.rotation);
               
-            }
-        
-        
+        }       
     }
-    
-
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
-
-
-
-    
 }

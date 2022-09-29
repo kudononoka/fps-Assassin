@@ -5,17 +5,21 @@ using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
-    [Header("PlayerのMaxHP"), SerializeField]
-    float _hpmax;
+    [Header("PlayerのMaxHP"), SerializeField]float _hpmax;
     float _nowhp;
     [Header("PlayerのHPSlider"), SerializeField] Slider _hpSlider;
-    int damageNum; public int DamageNum => damageNum;
+
+    [Tooltip("PunchRoboからのダメージ数")] int _punchRoboDamage = 5;
+    [Tooltip("Bombからのダメージ数")] int _bombDamage = 10;
+    [Tooltip("MiniSphereのレーザーのダメージ数")] float _laserDamage = 0.05f;
+    [Tooltip("敵からダメージを受けた回数　ランクに使用")]int damageNum; public int DamageNum => damageNum;
 
     // Start is called before the first frame update
     void Start()
     {
         _hpSlider.maxValue = _hpmax;
         _nowhp = _hpmax;
+        damageNum = 0;
     }
 
     // Update is called once per frame
@@ -46,17 +50,17 @@ public class PlayerHP : MonoBehaviour
 
     public void LaserCollisionEnter()
     {
-        Damage(0.05f);
+        Damage(_laserDamage);
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("PunchRobo"))
         {
-            Damage(5);
+            Damage(_punchRoboDamage);
         }
         if(other.gameObject.CompareTag("Bomb"))
         {
-            Damage(10);
+            Damage(_bombDamage);
         }
     }
 

@@ -18,9 +18,7 @@ public class ResultUIManager : MonoBehaviour
     void Start()
     {
         RankText.text = $"{RankJudge(GameManager.EnemyNum, GameManager.damageNum, GameManager.score)}";
-        Debug.Log(GameManager.EnemyNum );
-        Debug.Log(GameManager.damageNum);
-        Debug.Log(GameManager.score);
+      
     }
 
     // Update is called once per frame

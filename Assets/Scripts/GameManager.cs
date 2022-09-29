@@ -26,30 +26,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text StageCountText;
     [SerializeField] PlayerHP playerHp;
 
-    private int SurvivingEnemies = 0;
+    [Tooltip("Stageが変わるごとに生き残っている敵の数を数える")] int SurvivingEnemies = 0;
 
-    [Tooltip("Stageが変わるごとにPlayerの位置を初期化する")]
-    Transform player;
+    [Tooltip("Stageが変わるごとにPlayerの位置を初期化する")] Transform player;
 
-    
     private int _stageCount = 1; public int StageCount => _stageCount;
 
     private float _timer = 0;
     [Header("戦闘時間"), SerializeField] float _battleTime = 60;
     [Header("休憩時間"), SerializeField] float _breakTime = 15;
-    bool isBreak; public bool IsBreak => isBreak;
+    [Tooltip("休憩")]bool isBreak; public bool IsBreak => isBreak;
    
     bool isGame; public bool IsGame { get { return isGame; } set { isGame = value; } }
 
     public static GameManager Instance　=> instance;
 
-    
     // Start is called before the first frame update
     private void Awake()
     {
         if(instance == null)
         {
-            instance = this as GameManager;
+            instance = this;
         }
         else if(instance == this)
         {
@@ -63,9 +60,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
-        EnemyInstate();
+
+        EnemyInstate(); //敵の生成
+
         _normalCanvas.SetActive(true);
         _sellCanvas.SetActive(false);
+
         isGame = true;
        
         _timer = _battleTime;
@@ -82,11 +82,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         _timer -= Time.deltaTime;
+
         SellCanvasPointText.text = $"Point {_point}";
         MainCanvasPointText.text = $"Point {_point}";
         MainCanvasScoreText.text = $"Score {_score}";
         TimerText.text = String.Format("{0:00}", (int)_timer);
         StageCountText.text = $"{_stageCount}";
+
         if (_timer <= 0 && isBreak)
         {
             EnemyInstate();
@@ -100,13 +102,11 @@ public class GameManager : MonoBehaviour
         {
             GameObjectFind("Enemy");
             GameObjectFind("Bomb");
-            Debug.Log(SurvivingEnemies);
+           
             if(SurvivingEnemies == 0)
             {
                 Score(500);
             }
-            
-            
             
             if (_stageCount == 3)
             {
@@ -145,11 +145,10 @@ public class GameManager : MonoBehaviour
         _score += score;
     }
     
-    
-
-    void GameObjectFind(string name)
+    /// <summary>Stageが終わるごとに敵を破壊</summary>
+    /// <param name="name">敵のタグ名</param>
+    void GameObjectFind(string name)　
     {
-        
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(name);
             foreach (GameObject enemy in enemies)
             {
@@ -159,18 +158,16 @@ public class GameManager : MonoBehaviour
                 }
                 SurvivingEnemies++;
                 Destroy(enemy);
-            }
-        
-        
-        
+            }   
     }
 
+    /// <summary>Stageが変わるごとに敵を生成</summary>
     void EnemyInstate()
     {
         foreach (var enemy in _enemies)
         {
            
-            if (enemy.name == "MiniSphere" || enemy.name == "PunchRobo (1)")
+            if (enemy.name == "MiniPphereParticle" || enemy.name == "PunchRoboParticle")
             {
                 int num = UnityEngine.Random.Range(10, 15);
                 for (int i = 0; i < num; i++)
@@ -180,7 +177,7 @@ public class GameManager : MonoBehaviour
                     Instantiate(enemy, PerfectPos, Quaternion.identity);
                 }
             }
-            else if(enemy.name == "robotSphere")
+            else if(enemy.name == "BigSphereParticle")
             {
                 Vector3 position = new Vector3(UnityEngine.Random.Range(-movingRange, movingRange), 0, UnityEngine.Random.Range(-movingRange, movingRange));
                 Instantiate(enemy, position, Quaternion.identity);
@@ -188,14 +185,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>敵を生成するときPlayerと近すぎないように生成場所を設定する  Playerと生成場所の距離が20以上になるまでwhile文をまわす</summary>
+    /// <param name="pos">敵の生成場所</param>
+    
     private Vector3 RangeSareti(Vector3 pos)
     {
-
         while(Vector3.Distance(player.position, pos) < 20)
         {
             pos = new Vector3(UnityEngine.Random.Range(-movingRange, movingRange), 0, UnityEngine.Random.Range(-movingRange, movingRange));
         }
         return pos;
-
     }
 }
