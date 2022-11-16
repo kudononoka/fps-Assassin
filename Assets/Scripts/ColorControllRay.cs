@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColorControllRay : MonoBehaviour
 {
     [Tooltip("Playerの位置")] Transform _player;
-    public LayerMask layerMask = 1 << 0;
+    [SerializeField] LayerMask layerMask = 1 << 0;
     [Tooltip("Rayの長さ")] float _distance = 20;
     private GameObject _go;
     //private GameObject hitedenemyGo;

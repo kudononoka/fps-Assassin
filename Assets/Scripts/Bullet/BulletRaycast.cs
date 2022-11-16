@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletRaycast : MonoBehaviour
 {
-    public LayerMask layerMask = 1 << 0;
+    [SerializeField] LayerMask layerMask = 1 << 0;
     [Tooltip("Rayの長さ")] float distance = 1000;
     [SerializeField,Tooltip("Rayの当たった場所を取得　銃弾の方向を決めるもの")] GameObject _sphere;
     [SerializeField,Tooltip("Playerの所から生成")] GameObject _rayInstate;
