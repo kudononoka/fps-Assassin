@@ -11,6 +11,7 @@ TagManager:
   - Laser
   - PunchRobo
   - Bomb
+  - Core
   layers:
   - Default
   - TransparentFX

@@ -72,12 +72,12 @@ public class PunchRobo : EnemyBase,Interface
         }
     }
 
-    public override void Point()
-    {
-        FindObjectOfType<GameManager>().Point(point);
-    }
-    public override void Score()
-    {
-        FindObjectOfType<GameManager>().Score(score);
-    }
+    //public override void Point()
+    //{
+    //    FindObjectOfType<GameManager>().Point(point);
+    //}
+    //public override void Score()
+    //{
+    //    FindObjectOfType<GameManager>().Score(score);
+    //}
 }

@@ -5,29 +5,32 @@ using UnityEngine;
 /// <summary>これはEnemyの基底クラスです</summary>
 public abstract class EnemyBase : MonoBehaviour
 {
-    
-    public abstract void Point();
-    public abstract void Score();
+    [SerializeField] int _nowhp;
+    [SerializeField] int _maxhp;
 
-    [Tooltip("死んだ時の爆発パーティカル")]ParticleSystem deadParticle;
-    [Tooltip("死んだ時の爆発音")] AudioClip deadAudio;
+    protected bool isHit;
+    //public abstract void Point();
+    //public abstract void Score();
+
+    //[Tooltip("死んだ時の爆発パーティカル")]ParticleSystem deadParticle;
+    //[Tooltip("死んだ時の爆発音")] AudioClip deadAudio;
 
     
     private void OnEnable()
     {
-        deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
-        deadAudio = transform.root.GetComponent<AudioSource>().clip;
+        //deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
+        //deadAudio = transform.root.GetComponent<AudioSource>().clip;
     }
     private void Awake()
     {
-        deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
-        deadAudio = transform.root.GetComponent<AudioSource>().clip;
+        //deadParticle = transform.root.gameObject.GetComponent<ParticleSystem>();
+        //deadAudio = transform.root.GetComponent<AudioSource>().clip;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _nowhp = _maxhp;
     }
 
     // Update is called once per frame
@@ -36,16 +39,26 @@ public abstract class EnemyBase : MonoBehaviour
         
     }
 
-    
+
     protected void Damage()
     {
-        Score();
-        Point();
+        //Score();
+        //Point();
         GameManager.EnemyNum++;
         transform.root.position = transform.position;　//親オブジェクト(パーティカル、音)の位置を子オブジェクト位置に修正
-        deadParticle.Play();
-        transform.root.GetComponent<AudioSource>().PlayOneShot(deadAudio);　
+        //deadParticle.Play();
+        //transform.root.GetComponent<AudioSource>().PlayOneShot(deadAudio);
         Destroy(gameObject);
+    }
+
+    public void Hit(int damage)
+    {
+        _nowhp -= damage;
+        isHit = true;
+        if(_nowhp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
