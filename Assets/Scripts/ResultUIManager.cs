@@ -12,12 +12,12 @@ public class ResultUIManager : MonoBehaviour
     private void Awake()
     {
         
-        ScoreText.text = $"{String.Format("{0:000000}",GameManager.score)}";
+        //ScoreText.text = $"{String.Format("{0:000000}",GameManager.score)}";
     }
     // Start is called before the first frame update
     void Start()
     {
-        RankText.text = $"{RankJudge(GameManager.EnemyNum, GameManager.damageNum, GameManager.score)}";
+        //RankText.text = $"{RankJudge(GameManager.EnemyNum, GameManager.damageNum, GameManager.score)}";
       
     }
 

@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System.Linq;
 public class EnemyTest : EnemyBase
 {
     Rigidbody _rb;
 
     NavMeshAgent _agent;
 
-    bool _targetPlayer;
+    bool _targetPlayer = false;
 
     Transform _player;
-    Transform _core;
+    GameObject[] _core;
+    Transform _targetCore;
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _player = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        _core = GameObject.FindWithTag("Core").GetComponent<Transform>();
+        _core = GameObject.FindGameObjectsWithTag("Core");
+        _targetCore = _core.OrderBy(x => Vector3.Distance(this.transform.position, x.transform.position)).First().GetComponent<Transform>();
+        _targetPlayer = false;
     }
 
     // Update is called once per frame
@@ -31,7 +34,7 @@ public class EnemyTest : EnemyBase
         }
         else
         {
-            _agent.SetDestination(_core.position);
+            _agent.SetDestination(_targetCore.position);
         }
 
         TargetChange();

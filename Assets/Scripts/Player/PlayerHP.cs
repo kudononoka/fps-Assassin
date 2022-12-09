@@ -33,7 +33,7 @@ public class PlayerHP : MonoBehaviour
         _nowhp -= damage;
         if(_nowhp <= 0)
         {
-            FindObjectOfType<GameManager>().IsGame = false;
+            //FindObjectOfType<GameManager>().IsGame = false;
         }
         else if (_nowhp > 0)
         {

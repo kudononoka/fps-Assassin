@@ -22,10 +22,10 @@ public class Recovery : MonoBehaviour
 
     public void CostPoint()
     {
-        if (GameManager.point >= _cost)
-        {
-            FindObjectOfType<GameManager>().CostPoint(_cost);
-            FindObjectOfType<PlayerHP>().Recovery(recoveryAmount);
-        }
+        //if (GameManager.point >= _cost)
+        //{
+        //    FindObjectOfType<GameManager>().CostPoint(_cost);
+        //    FindObjectOfType<PlayerHP>().Recovery(recoveryAmount);
+        //}
     }
 }

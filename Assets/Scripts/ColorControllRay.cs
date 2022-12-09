@@ -22,31 +22,31 @@ public class ColorControllRay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<GameManager>().IsBreak == false)
-        {
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
+        //if (FindObjectOfType<GameManager>().IsBreak == false)
+        //{
+        //    Ray ray = new Ray(transform.position, transform.forward);
+        //    RaycastHit hit;
             
-            if(Physics.Raycast(ray, out hit,_distance,layerMask))
-            {
-                enemyhit = true;
+        //    if(Physics.Raycast(ray, out hit,_distance,layerMask))
+        //    {
+        //        enemyhit = true;
                     
-                _go = hit.collider.gameObject;
+        //        _go = hit.collider.gameObject;
                     
-                mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
-                if (Vector3.Distance(_go.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
-                {
+        //        mesh = _go.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>();
+        //        if (Vector3.Distance(_go.transform.position, transform.position) < Vector3.Distance(_player.position, transform.position))
+        //        {
                         
-                    mesh.material.color = new Color32(255, 255, 255, 100);
-                }
-            }
+        //            mesh.material.color = new Color32(255, 255, 255, 100);
+        //        }
+        //    }
 
-            if (mesh != null && enemyhit && hit.collider == null)
-            {
-                mesh.material.color = new Color32(255, 255, 255, 255);
-                enemyhit = false;
-                mesh = null;
-            }
+        //    if (mesh != null && enemyhit && hit.collider == null)
+        //    {
+        //        mesh.material.color = new Color32(255, 255, 255, 255);
+        //        enemyhit = false;
+        //        mesh = null;
+        //    }
 
             /*Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit[] hits = Physics.RaycastAll(ray, _distance, layerMask);
@@ -73,11 +73,11 @@ public class ColorControllRay : MonoBehaviour
                 mesh.material.color = new Color32(255, 255, 255, 255);
             }*/
 
-        }
-        else if (FindObjectOfType<GameManager>().IsBreak)
-        {
-            enemyhit = false;
-        }
+        //}
+        //else if (FindObjectOfType<GameManager>().IsBreak)
+        //{
+        //    enemyhit = false;
+        //}
     }
 }
     

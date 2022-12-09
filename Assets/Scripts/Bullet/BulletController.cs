@@ -72,11 +72,11 @@ public class BulletController : MonoBehaviour
 
     public void BulletPowerUP()
     {
-        if (GameManager.point >= _cost)
-        {
-            FindObjectOfType<GameManager>().CostPoint(_cost);
-            bulletPower += 2;
-        }
+        //if (GameManager.point >= _cost)
+        //{
+        //    FindObjectOfType<GameManager>().CostPoint(_cost);
+        //    bulletPower += 2;
+        //}
     }
 
 }

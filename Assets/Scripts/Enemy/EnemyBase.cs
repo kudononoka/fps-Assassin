@@ -44,11 +44,11 @@ public abstract class EnemyBase : MonoBehaviour
     {
         //Score();
         //Point();
-        GameManager.EnemyNum++;
-        transform.root.position = transform.position;　//親オブジェクト(パーティカル、音)の位置を子オブジェクト位置に修正
-        //deadParticle.Play();
-        //transform.root.GetComponent<AudioSource>().PlayOneShot(deadAudio);
-        Destroy(gameObject);
+        //GameManager.EnemyNum++;
+        //transform.root.position = transform.position;　//親オブジェクト(パーティカル、音)の位置を子オブジェクト位置に修正
+        ////deadParticle.Play();
+        ////transform.root.GetComponent<AudioSource>().PlayOneShot(deadAudio);
+        //Destroy(gameObject);
     }
 
     public void Hit(int damage)
