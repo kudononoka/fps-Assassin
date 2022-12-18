@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int spawnPoint;
     [SerializeField] int spawnPoint2;
+    [SerializeField] Slider[] _Slider;
+
+    [SerializeField] int _maxHP = 100;
+    [SerializeField] int _minHP = 0;
     //[SerializeField] private static int _score = 0; public static int score { get { return _score; } }
     //[SerializeField] private static int _point = 0; public static int point { get { return _point; } }
     //private static int damageNumber = 0; public static int damageNum { get { return damageNumber; } }
@@ -65,6 +69,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        Array.ForEach(_Slider, slider => slider.maxValue = _maxHP);
         //player = GameObject.Find("Player").GetComponent<Transform>();
 
         //EnemyInstate(); //敵の生成
