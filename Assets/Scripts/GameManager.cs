@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int _enemiesSpawnNum;
     [SerializeField] GameObject _enemyPrefab;
 
-    int spawnPoint;
-    int spawnPoint2;
+    [SerializeField] int spawnPoint;
+    [SerializeField] int spawnPoint2;
     //[SerializeField] private static int _score = 0; public static int score { get { return _score; } }
     //[SerializeField] private static int _point = 0; public static int point { get { return _point; } }
     //private static int damageNumber = 0; public static int damageNum { get { return damageNumber; } }
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private float _timer = 0;
     [SerializeField] float _enemySpawnTime;
+    [SerializeField] float _enemySpawnInterval;
     //[Header("戦闘時間"), SerializeField] float _battleTime = 60;
     //[Header("休憩時間"), SerializeField] float _breakTime = 15;
     //[Tooltip("休憩")]bool isBreak; public bool IsBreak => isBreak;
@@ -177,15 +178,17 @@ public class GameManager : MonoBehaviour
     {
         spawnPoint = UnityEngine.Random.Range(0, _enemiesSpawnPoint.Length);
         spawnPoint2 = UnityEngine.Random.Range(0, _enemiesSpawnPoint.Length);
-        if (spawnPoint == spawnPoint2)
+        
+        while (spawnPoint2 == spawnPoint)
         {
-            while (spawnPoint != spawnPoint2)
-            {
-                spawnPoint2 = UnityEngine.Random.Range(0, _enemiesSpawnPoint.Length);
-            }
+            spawnPoint2 = UnityEngine.Random.Range(0, _enemiesSpawnPoint.Length);
         }
 
+
+        
         StartCoroutine(Spawn());
+        
+        
          
         //foreach (var enemy in _enemies)
         //{
@@ -215,7 +218,7 @@ public class GameManager : MonoBehaviour
             Instantiate(_enemyPrefab, _enemiesSpawnPoint[spawnPoint].transform.position, Quaternion.identity);
             Instantiate(_enemyPrefab, _enemiesSpawnPoint[spawnPoint2].transform.position, Quaternion.identity);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(_enemySpawnInterval);
         }
     }
 
